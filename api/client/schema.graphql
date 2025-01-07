@@ -1,0 +1,12 @@
+type Client {
+    id: ID!
+    name: String!
+}
+
+extend type Config {
+    client: Client
+}
+
+extend type Query {
+    client(id: ID!): Client
+}

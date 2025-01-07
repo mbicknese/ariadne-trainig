@@ -1,0 +1,17 @@
+"""
+" Configuration object for hedge calculations
+"
+" This contains specific settings on how to handle the calculations, like interpolation and valuation curves.
+"""
+type Config {
+    id: ID!
+    version: String!
+}
+
+extend type Client {
+    config: Config
+}
+
+extend type Query {
+    config(id: ID!): Config
+}
