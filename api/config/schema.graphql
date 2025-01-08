@@ -1,10 +1,11 @@
 """
-" Configuration object for hedge calculations
-"
-" This contains specific settings on how to handle the calculations, like interpolation and valuation curves.
+Configuration object for hedge calculations
+
+This contains specific settings on how to handle the calculations, like interpolation and valuation curves.
 """
 type Config {
     id: ID!
+    "Version as string, this allows us to use any scheme (like semantic versioning)"
     version: String!
 }
 
