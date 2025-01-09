@@ -1,5 +1,7 @@
 import os
 from ariadne import ObjectType, load_schema_from_path
+from api.client.model import Client
+from .repositories import ConfigRepositoryABC, StaticConfigRepository, ConfigNotFound
 
 type_defs = load_schema_from_path(os.path.dirname(__file__) + "/schema.graphql")
 query = ObjectType("Query")
@@ -9,10 +11,8 @@ resolvers = [query, client]
 
 @query.field("config")
 @client.field("config")
-def resolve_config(parent, *_, id: str=None):
-    return {
-        "id": id or parent["config"]["id"],
-        "version": "v1",
-        "client": { "id": "foo" }
-    }
-
+async def resolve_config(parent: Client=None, *_, id: str=None, repository: ConfigRepositoryABC=StaticConfigRepository()):
+    try:
+        return await repository.get_config(id or parent.configId)
+    except ConfigNotFound:
+        return None
